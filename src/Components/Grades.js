@@ -18,14 +18,16 @@ const Grades = ({ state, setState }) => {
     for (let i = 1; i <= state.number; i++) 
     {
         gradeInput.push(
-        <div>
-            <label>Grade number {i}:</label>
-            <input type="number" id={i-1} value = {state.grades[i-1]} onChange = {handleGrade} min ={1} max = {6} required/>
+        <div className="gradeInput">
+            <div>
+                <label>Grade number {i}: </label>
+                <input type="number" id={i-1} value = {state.grades[i-1]} onChange = {handleGrade} min ={1} max = {6} required/>
+            </div>
             {state.weighted && 
-            <span>
-                <label>Grade weight:</label>
-                <input type="number" id={i-1} value = {state.weights[i-1]} onChange = {handleWeight} min ={1} required/>
-            </span>}
+            <div>
+                <label>Grade weight: </label>
+                <input type="number" id={i-1} value = {state.weights[i-1]} onChange = {handleWeight} min ={0} required/>
+            </div>}
         </div>)
     }
     const validate = () =>

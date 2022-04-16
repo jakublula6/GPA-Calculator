@@ -1,7 +1,7 @@
 const Footer = () => {
     return (
-        <footer>
-            Copyright &copy;
+        <footer className="footer">
+            Created By Jakub Lula
         </footer>
     )
 }

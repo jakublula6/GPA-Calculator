@@ -20,7 +20,7 @@ const Result = ({ state, setState }) => {
                     {state.weighted ? "Your Weighted GPA:" : "Your arithmetic GPA:"}
                 </h1>
                 <h2>
-                    {state.gpa}
+                    {state.gpa.toFixed(2)}
                 </h2>
             </div>
             <div>

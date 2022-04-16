@@ -3,6 +3,7 @@ import Grades from "./Components/Grades";
 import Result from "./Components/Result";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import './App.css'
 function App() {
   const [state, setState] = useState(
     {
@@ -14,8 +15,8 @@ function App() {
     });
 
   return (
-    <div className="App">
-      <Routes >
+    <div className="App" >
+      <Routes>
         <Route path="/" element = {<Form state = {state} setState = {setState}/>}/>
         <Route path="/grades" element = {<Grades state = {state} setState = {setState}/>}/>
         <Route path="/result" element = {<Result state = {state} setState = {setState}/>}/>
