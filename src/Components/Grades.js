@@ -20,45 +20,85 @@ const Grades = ({ state, setState }) => {
         gradeInput.push(
         <div>
             <label>Grade number {i}:</label>
-            <input type="number" id={i-1} value = {state.grades[i-1]} onChange = {handleGrade} min ={1} max = {6} required = 'true'/>
+            <input type="number" id={i-1} value = {state.grades[i-1]} onChange = {handleGrade} min ={1} max = {6} required/>
             {state.weighted && 
             <span>
                 <label>Grade weight:</label>
-                <input type="number" id={i-1} value = {state.weights[i-1]} onChange = {handleWeight} min ={1} required = 'true'/>
+                <input type="number" id={i-1} value = {state.weights[i-1]} onChange = {handleWeight} min ={1} required/>
             </span>}
         </div>)
     }
-    
-    const handleSubmit = (event) =>
+    const validate = () =>
     {
         if(state.weighted === false)
         {
-            //For arithmetic GPA
-            event.preventDefault();
-            let sum = 0
-            state.grades.map((x) =>sum = sum+x)
-            setState({...state, gpa:sum/state.number})
+            for (let i = 0; i < state.number; i++) 
+            {
+                if(!(state.grades[i]<=6&&state.grades[i]>=1))
+                {
+                    alert("Ocena jest niepoprawna!")
+                    return false;
+                }
+            }
+            return true;
         }
         else
         {
-            //For weighted GPA
-            event.preventDefault();
-            let sum = 0
-            let number = 0
             for (let i = 0; i < state.number; i++) 
             {
-                sum = sum + state.grades[i]*state.weights[i]
-                number = number + state.weights[i]
+                if(!(state.grades[i]<=6&&state.grades[i]>=1))
+                {
+                    alert("Ocena jest niepoprawna!")
+                    return false;
+                }
+                if(state.weights[i] == undefined ||state.weights[i]<0)
+                {
+                    alert('Waga jest niepoprawna!')
+                    return false;
+                }
             }
-            setState({...state, gpa:sum/number})
+            return true;
         }
+        
+    }
+    const handleSubmit = (event) =>
+    {
+        let good = validate();
+        console.log(good)
+        if(good)
+        {
+            if(state.weighted === false)
+            {
+                //For arithmetic GPA
+                let sum = 0
+                state.grades.map((x) =>
+                {
+                    sum = sum+x
+                })
+                setState({...state, gpa:sum/state.number})
+            }
+            else
+            {
+                //For weighted GPA
+                let sum = 0
+                let number = 0
+                for (let i = 0; i < state.number; i++) 
+                {
+                    sum = sum + state.grades[i]*state.weights[i]
+                    number = number + state.weights[i]
+                }
+                setState({...state, gpa:sum/number})
+            }
+        }
+        else
+        event.preventDefault()
     }
 
     return (
         <form onSubmit = {handleSubmit}>
             {gradeInput}
             <Link to ='/result'>
-                <button type="submit">
+                <button onClick={handleSubmit}>
                     Calculate!
                 </button>
             </Link>
