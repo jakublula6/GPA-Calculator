@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Form  from "./Components/Form";
+import Grades from "./Components/Grades";
+import Result from "./Components/Result";
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 function App() {
+  const [state, setState] = useState(
+    {
+      number: 2,
+      weighted: false,
+      gpa:0,
+      grades:[],
+      weights:[]
+    });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes >
+        <Route path="/" element = {<Form state = {state} setState = {setState}/>}/>
+        <Route path="/grades" element = {<Grades state = {state} setState = {setState}/>}/>
+        <Route path="/result" element = {<Result state = {state} setState = {setState}/>}/>
+      </Routes>
     </div>
   );
 }
